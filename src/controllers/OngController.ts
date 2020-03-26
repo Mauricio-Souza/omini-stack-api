@@ -1,7 +1,8 @@
-const crypto = require("crypto");
-const connection = require("../database/connection");
+import * as crypto from "crypto";
+import { connection }  from "../database/connection";
 
-module.exports = {
+class OngController {
+
   async create(req, res) {
     const { name, email, whatsapp, city, uf } = req.body;
     const id = crypto.randomBytes(4).toString("HEX");
@@ -14,10 +15,12 @@ module.exports = {
       uf
     });
     return res.json({ id });
-  },
+  }
 
   async index(req, res) {
     const ongs = await connection("ongs").select("*");
     return res.json(ongs);
   }
-};
+}
+
+export const ongController = new OngController()

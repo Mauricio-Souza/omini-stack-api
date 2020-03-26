@@ -1,6 +1,6 @@
-const connection = require("../database/connection");
+import { connection }  from "../database/connection";
 
-module.exports = {
+class IncidentController {
   async create(req, res) {
     const { title, description, value } = req.body;
     const ong_id = req.headers.authorization;
@@ -11,7 +11,7 @@ module.exports = {
       ong_id
     });
     return res.json({ id });
-  },
+  }
 
   async index(req, res) {
     const { page = 1 } = req.query;
@@ -33,7 +33,7 @@ module.exports = {
 
     res.header("X-Total-Count", total["count(*)"]);
     return res.json(incidents);
-  },
+  }
 
   async delete(req, res) {
     const { id } = req.params;
@@ -55,4 +55,6 @@ module.exports = {
       .delete();
     return res.status(204).send();
   }
-};
+}
+
+export const incidentController = new IncidentController()
